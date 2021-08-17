@@ -1,0 +1,11 @@
+<div *ngIf="user" class="comment">
+  <img [src]="user.ProfileImage"/> 
+  <div class="comment-wrapper">
+    <span>{{ user.DisplayName || user.LoginName }} <div class="responseOf" *ngIf="responseOf"><ion-icon name="return-down-forward-outline"></ion-icon> {{responseOf}}</div></span>
+    <ion-textarea auto-grow maxlength="280" placeholder="Adicionar um comentário público"></ion-textarea>
+    <div class="action-wrapper">
+      <span>Enviar</span>
+      <span>Cancelar</span>
+    </div>
+  </div>
+</div>

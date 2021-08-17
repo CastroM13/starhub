@@ -1,0 +1,7 @@
+{
+  "name": "starhub",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

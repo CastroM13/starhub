@@ -1,0 +1,50 @@
+.logo {
+    font-family: airstrike;
+    src: url('/assets/airstrike.ttf') format('truetype');
+}
+
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.toolbar > * {
+    padding: .5em;
+    font-size: 2em;
+}
+
+.center-button {
+    font-size: 4em;
+}
+
+ion-menu {
+    --min-width: 100vw;
+}
+
+.menubar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.menubar > ion-icon {
+    padding: .5em;
+    font-size: 2em;
+}
+
+ion-item {
+    pointer-events: auto !important;
+}
+
+img {
+    border-radius: 100%;
+    height: 32px;
+    width: 32px;
+}
+
+#menu-content {
+    height: 100vh !important;
+}
+
+.button-align {
+    text-align: center !important;
+}

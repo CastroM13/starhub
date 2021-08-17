@@ -1,0 +1,70 @@
+.comment {
+    margin: 1em;
+    background-color: var(--ion-card-background, var(--ion-item-background, var(--ion-background-color, #fff)));
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+}
+
+.comment > img {
+    // align-self: flex-start;
+    border-radius: 100%;
+    height: 48px;
+    width: 48px;
+    z-index: 2;
+}
+
+.comment > div {
+    width: 100%;
+    color: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.87);
+    border-radius: 18px;
+    margin-left: .5em;
+    display: flex;
+    flex-flow: column wrap;
+    padding: .2em;
+    padding-top: 0;
+}
+
+.comment > div > span:first-child {
+    color: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.67);
+    padding-bottom: .5em;
+}
+
+.action-comment-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.action-comment > ion-icon {
+    font-size: 1.25em;
+    transform: translateY(.15em);
+}
+
+.action-comment > div {
+    font-size: 1em;
+    padding: .25em;
+}
+
+.action-comment {
+    border-radius: 25px;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+    padding: 0.5em;
+}
+
+.action-moreless {
+    color: #387bab !important;
+    font-weight: 600 !important;
+    // color: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.67);
+    padding-top: .5em;
+}
+
+.response {
+    margin-left: -15px;
+}
+
+.responseOf {
+    font-size: 0.8em;
+    color: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.66);
+}

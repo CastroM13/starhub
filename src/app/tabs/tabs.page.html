@@ -1,0 +1,103 @@
+<ion-menu class="menu" side="start" menu-id="menu" content-id="content">
+  <ion-header>
+      <ion-toolbar>
+        <div class="menubar">
+          <ion-icon (click)="closeMenu()" name="chevron-back-outline"></ion-icon>
+          <ion-title>Menu</ion-title>
+        </div>
+      </ion-toolbar>
+  </ion-header>
+  <ion-content id="content">
+    <ion-list>
+    <ion-item>a</ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<ion-menu class="profile" type="overlay" side="end" menu-id="profile" content-id="menu-content">
+  <div *ngIf="user">
+    <ion-header>
+      <ion-toolbar>
+        <div class="menubar">
+          <ion-icon (click)="closeProfile()" name="chevron-back-outline"></ion-icon>
+          <ion-title>Menu</ion-title>
+        </div>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content id="menu-content">
+      <ion-list>
+        <ion-item>a</ion-item>
+        <ion-item>b</ion-item>
+        <ion-item (click)="changeTheme()">
+          Tema escuro
+          <ion-toggle slot="end" mode="ios" [(ngModel)]="temaEscuro"></ion-toggle>
+        </ion-item>
+        <ion-item class="button-align" button (click)="logoff()" detail>
+          <ion-label>
+            Sair
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </div>
+  <div *ngIf="!user">
+    <ion-header>
+      <ion-toolbar>
+        <div class="menubar">
+          <ion-icon (click)="closeProfile()" name="chevron-back-outline"></ion-icon>
+          <ion-title>Login</ion-title>
+        </div>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content id="menu-content">
+      <ion-item>
+        <ion-label>Usuário: </ion-label>
+        <ion-input [(ngModel)]="userLogin.user"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Senha: </ion-label>
+        <ion-input type="password" [(ngModel)]="userLogin.password"></ion-input>
+      </ion-item>
+      <ion-item class="button-align" button (click)="login()" detail>
+        <ion-label>
+          Entrar
+        </ion-label>
+      </ion-item>
+    </ion-content>
+  </div>
+</ion-menu>
+
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <div class="toolbar">
+      <ion-icon (click)="openMenu()" name="menu"></ion-icon>
+      <span class="logo">starhub</span>
+      <ion-icon *ngIf="!user" (click)="openProfile()" name="log-in-outline"></ion-icon>
+      <div *ngIf="user">
+        <img *ngIf="user.ProfileImage else placeholder" (click)="openProfile()" [src]="user.ProfileImage"/>
+        <ng-template #placeholder>
+          <ion-icon (click)="openProfile()" name="person-circle-outline"></ion-icon>
+        </ng-template>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+<ion-tabs>
+
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="tab1">
+      <ion-icon name="newspaper-outline"></ion-icon>
+      <ion-label>Notícias</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="tab2">
+      <ion-icon class="center-button" name="add-circle-outline"></ion-icon>
+    </ion-tab-button>
+
+    <ion-tab-button tab="tab3">
+      <ion-icon name="pricetags-outline"></ion-icon>
+      <ion-label>Rastreador</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+
+</ion-tabs>
