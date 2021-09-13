@@ -1,0 +1,13 @@
+<div class="channel-body">
+  <ion-list *ngIf="channels" class="channel-wrapper">
+    <div *ngFor="let channel of channels" class="channel-item">
+      <ion-avatar slot="start">
+        <img alt="avatar" [src]="'https://avatars.dicebear.com/api/initials/'+channel.Name+'.svg'">
+      </ion-avatar>
+      <ion-label>
+        <h2>{{channel.Name}}</h2>
+        <p>{{channel.Description}}</p>
+      </ion-label>
+    </div>
+  </ion-list>
+</div>

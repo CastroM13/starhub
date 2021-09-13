@@ -1,0 +1,115 @@
+ion-content {
+  --padding-top: 70px;
+  --padding-bottom: 50px;
+}
+
+form {
+  height: 8vh;
+  position: fixed;
+  bottom: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgb(0 0 0/33%) 100%
+  );
+  width: 100%;
+  display: flex;
+  font-size: 1.5rem;
+}
+
+.sender {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  line-height: 1.5;
+  height: 3rem;
+  width: calc(100% - 1.2rem);
+  font-size: 1rem;
+  background: var(--ion-toolbar-background, var(--ion-background-color, #fff));
+  color: var(--ion-toolbar-color, var(--ion-text-color, #424242));
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  margin: 0.6rem;
+}
+
+.sender input {
+  width: 90%;
+  padding: 0 1em;
+  height: 3rem;
+  background-color: transparent;
+  border: 0;
+  color: var(--ion-toolbar-color, var(--ion-text-color, #424242));
+}
+
+.sender input:focus {
+  outline: 0;
+}
+
+.sender ion-icon {
+  height: 2rem;
+  padding-top: .5rem;
+  padding-right: 1rem;
+  width: 10%;
+  opacity: .4;
+  color: var(--ion-toolbar-color, var(--ion-text-color, #424242));
+}
+
+.message {
+  padding: 0.4em;
+  border-bottom: 1px solid #7171710d;
+  display: flex;
+  margin: 0;
+  word-wrap: break-word;
+  justify-content: flex-start;
+}
+
+.message-image {
+  height: 100%;
+  text-align: center;
+}
+
+.message-text {
+  width: calc(100% - 64px);
+  margin: .8em;
+  margin-left: .5em;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.message-text span:first-child {
+  margin-bottom: .5em;
+  color: var(--ion-toolbar-color, var(--ion-text-color, #424242));
+  font-weight: 700;
+}
+
+.message-text span:last-child {
+  color: var(--ion-toolbar-color, var(--ion-text-color, #424242));
+}
+
+.received .message-text {
+  align-items: flex-start;
+}
+
+time {
+  color: var(--ion-toolbar-color, var(--ion-text-color, #424242));
+  font-size: 0.7rem;
+  color: #9a9a9a;
+}
+
+.profileImage {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin: .5em;
+}
+
+.message:last-child {
+  margin-bottom: 20px;
+}
+
+.custom-popover .popover-content {
+  right: .75em !important;
+  bottom: 8em !important;
+}

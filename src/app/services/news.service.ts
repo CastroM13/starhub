@@ -5,16 +5,30 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class NewsService {
-  private readonly API: string = 'http://localhost:3000/';
-  
+  private readonly api: string = 'http://vgstudio.servegame.com:3000/';
+
   constructor(private http: HttpClient) { }
 
   getNews(param) {
-    return this.http.get(this.API+'news/'+param);
+    return this.http.get(this.api+'news/'+param);
   }
 
-  getComments(postID) {
-    return this.http.get(this.API+'comments/'+postID);
+  getStats(postID) {
+    return this.http.get(this.api+'post/'+postID+'/stats');
+  }
+
+  addComment(postID, comment) {
+    return this.http.post(this.api+'post/'+postID+'/comment', comment);
+  }
+
+  likePost(postID, token) {
+    console.log(postID);
+    return this.http.post(this.api+'post/'+postID+'/like', {token});
+  }
+
+  dislikePost(postID, token) {
+    console.log(postID);
+    return this.http.post(this.api+'post/'+postID+'/dislike', {token});
   }
 
 }

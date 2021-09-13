@@ -9,30 +9,49 @@
   </ion-header>
   <ion-content id="content">
     <ion-list>
-    <ion-item>a</ion-item>
+      <ion-item button (click)="changeTheme()">
+        <ion-icon class="menu-icon" name="sunny-outline"></ion-icon>
+        Tema escuro
+        <ion-toggle slot="end" mode="ios" [(ngModel)]="temaEscuro"></ion-toggle>
+      </ion-item>
+      <ion-item-group>
+        <ion-item-divider>
+          <ion-label>Funções</ion-label>
+        </ion-item-divider>
+
+        <ion-item *ngFor="let item of news" (click)="changeRoute(item.route)">
+            <ion-icon class="menu-icon" [name]="item.icon"></ion-icon>
+            <ion-label>{{item.name}}</ion-label>
+        </ion-item>
+      </ion-item-group>
     </ion-list>
   </ion-content>
 </ion-menu>
 
 <ion-menu class="profile" type="overlay" side="end" menu-id="profile" content-id="menu-content">
-  <div *ngIf="user">
+  <div *ngIf="activePage === 'user'">
     <ion-header>
       <ion-toolbar>
         <div class="menubar">
           <ion-icon (click)="closeProfile()" name="chevron-back-outline"></ion-icon>
-          <ion-title>Menu</ion-title>
+          <div class="title-order">
+            <span>{{user.DisplayName || user.LoginName}}</span>
+            <img class="noProfileImage" *ngIf="!user.ProfileImage" src="../../assets/icon/user.svg"/>
+            <img class="profileImage" *ngIf="user.ProfileImage" [src]="(user?.ProfileImage)"/>
+          </div>
         </div>
+        <img class="bgProfile" *ngIf="user.ProfileImage" [src]="(user?.ProfileImage)"/>
       </ion-toolbar>
     </ion-header>
     <ion-content id="menu-content">
       <ion-list>
-        <ion-item>a</ion-item>
-        <ion-item>b</ion-item>
-        <ion-item (click)="changeTheme()">
+        <ion-item><ion-icon class="menu-icon" name="pencil-outline"></ion-icon>Editar Perfil</ion-item>
+        <ion-item button (click)="changeTheme()">
+          <ion-icon class="menu-icon" name="sunny-outline"></ion-icon>
           Tema escuro
           <ion-toggle slot="end" mode="ios" [(ngModel)]="temaEscuro"></ion-toggle>
         </ion-item>
-        <ion-item class="button-align" button (click)="logoff()" detail>
+        <ion-item button class="button-align" button (click)="logoff()" detail>
           <ion-label>
             Sair
           </ion-label>
@@ -40,12 +59,16 @@
       </ion-list>
     </ion-content>
   </div>
-  <div *ngIf="!user">
+
+  <div *ngIf="activePage === 'login' && !user">
     <ion-header>
       <ion-toolbar>
         <div class="menubar">
           <ion-icon (click)="closeProfile()" name="chevron-back-outline"></ion-icon>
           <ion-title>Login</ion-title>
+          <ion-button (click)="activePage = 'registration'" color="light">
+            Criar conta
+          </ion-button>
         </div>
       </ion-toolbar>
     </ion-header>
@@ -56,13 +79,98 @@
       </ion-item>
       <ion-item>
         <ion-label>Senha: </ion-label>
-        <ion-input type="password" [(ngModel)]="userLogin.password"></ion-input>
+        <ion-input [type]="!showPassword? 'password' : ''" [(ngModel)]="userLogin.password"></ion-input>
+        <ion-button shape="round" color="dark" *ngIf="showPassword" (click)="showPassword=!showPassword">
+          <ion-icon class="show-icon" name="eye-outline"></ion-icon>
+        </ion-button>
+        <ion-button shape="round" color="dark" *ngIf="!showPassword" (click)="showPassword=!showPassword">
+          <ion-icon class="show-icon" name="eye-off-outline"></ion-icon>
+        </ion-button>
       </ion-item>
-      <ion-item class="button-align" button (click)="login()" detail>
+      <ion-item button class="button-align" button (click)="login()" detail>
         <ion-label>
           Entrar
         </ion-label>
       </ion-item>
+    </ion-content>
+  </div>
+
+  <div *ngIf="activePage === 'registration'">
+    <ion-header>
+      <ion-toolbar>
+        <div class="menubar">
+          <ion-icon (click)="activePage = 'login'" name="chevron-back-outline"></ion-icon>
+          <ion-title>Criar conta</ion-title>
+        </div>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content id="menu-content">
+      <ion-item>
+        <ion-label>Usuário: </ion-label>
+        <ion-input [(ngModel)]="userRegistration.user"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Nome em Exibição: </ion-label>
+        <ion-input (change)="changeDisplayName($event)" [ngModel]="userRegistration.displayName || userRegistration.user"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Email: </ion-label>
+        <ion-input [(ngModel)]="userRegistration.email" type="email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Senha: </ion-label>
+        <ion-input [type]="!showPassword? 'password' : ''" [(ngModel)]="userRegistration.password"></ion-input>
+        <ion-button shape="round" color="dark" *ngIf="showPassword" (click)="showPassword=!showPassword">
+          <ion-icon class="show-icon" name="eye-outline"></ion-icon>
+        </ion-button>
+        <ion-button shape="round" color="dark" *ngIf="!showPassword" (click)="showPassword=!showPassword">
+          <ion-icon class="show-icon" name="eye-off-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+      <ion-item>
+        <ion-label>Confirmar sua Senha: </ion-label>
+        <ion-input [type]="!showPassword? 'password' : ''" [(ngModel)]="userRegistration.confirmPassword"></ion-input>
+        <ion-button shape="round" color="dark" *ngIf="showPassword" (click)="showPassword=!showPassword">
+          <ion-icon class="show-icon" name="eye-outline"></ion-icon>
+        </ion-button>
+        <ion-button shape="round" color="dark" *ngIf="!showPassword" (click)="showPassword=!showPassword">
+          <ion-icon class="show-icon" name="eye-off-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+      <ion-item button class="button-align" button (click)="registrate()" detail>
+        <ion-label>
+          Criar
+        </ion-label>
+      </ion-item>
+    </ion-content>
+  </div>
+
+  <div *ngIf="activePage === 'confirmation' && !(user?.Active)">
+    <ion-header>
+      <ion-toolbar>
+        <div class="menubar">
+          <ion-icon (click)="closeProfile()" name="chevron-back-outline"></ion-icon>
+          <ion-title>Confirmação de conta!</ion-title>
+        </div>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content id="menu-content">
+      <div class="center-text">
+        <p>Um token de 6 dígitos foi enviado para {{ userRegistration.email || 'seu e-mail' }}.</p>
+        <h1>Token</h1>
+        <div class="token-align">
+          <input (keyup)="enter($event)" [(ngModel)]="validation"/>
+        </div>
+        <p>Enquanto sua conta não for confirmada você só poderá interagir com as postagens através do botão <ion-icon aria-placeholder="Gostei" name="heart" style="color: #ff2c69"></ion-icon>. </p>
+        <ion-button color="light" expand="block" (click)="completeRegistration()">Confirmar Conta</ion-button>
+      </div>
+      <div class="button-wrapper">
+        <ion-item color="danger" button class="button-align" button (click)="logoff()" detail>
+          <ion-label>
+            Sair
+          </ion-label>
+        </ion-item>
+      </div>
     </ion-content>
   </div>
 </ion-menu>
@@ -71,7 +179,9 @@
   <ion-toolbar>
     <div class="toolbar">
       <ion-icon (click)="openMenu()" name="menu"></ion-icon>
-      <span class="logo">starhub</span>
+      <span class="logo">
+        STARHUB
+      </span>
       <ion-icon *ngIf="!user" (click)="openProfile()" name="log-in-outline"></ion-icon>
       <div *ngIf="user">
         <img *ngIf="user.ProfileImage else placeholder" (click)="openProfile()" [src]="user.ProfileImage"/>
@@ -82,22 +192,14 @@
     </div>
   </ion-toolbar>
 </ion-header>
+
 <ion-tabs>
-
   <ion-tab-bar slot="bottom">
-    <ion-tab-button tab="tab1">
-      <ion-icon name="newspaper-outline"></ion-icon>
-      <ion-label>Notícias</ion-label>
-    </ion-tab-button>
 
-    <ion-tab-button tab="tab2">
-      <ion-icon class="center-button" name="add-circle-outline"></ion-icon>
-    </ion-tab-button>
-
-    <ion-tab-button tab="tab3">
-      <ion-icon name="pricetags-outline"></ion-icon>
-      <ion-label>Rastreador</ion-label>
+    <ion-tab-button *ngFor="let item of news" (click)="resetNotifications(item.name)" [tab]="item.route">
+      <ion-icon [name]="item.icon"></ion-icon>
+      <ion-label>{{item.name}}</ion-label>
+      <ion-badge *ngIf="item.badgeCount > 0" color="primary">{{item.badgeCount}}</ion-badge>
     </ion-tab-button>
   </ion-tab-bar>
-
 </ion-tabs>

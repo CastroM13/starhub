@@ -1,32 +1,36 @@
 <div class="comment">
-  <img [src]="(user && user.profileImage)"/> 
-  <!-- <div class="response-line"></div> -->
+  <img class="noProfileImage" *ngIf="!user.ProfileImage" src="../../assets/icon/user.svg"/>
+  <img class="profileImage" *ngIf="user.ProfileImage" [src]="(user?.ProfileImage)"/>
   <div>
-    <span>{{(user && user.name)}} <div class="responseOf" *ngIf="responseOf"><ion-icon name="return-down-forward-outline"></ion-icon> {{responseOf}}</div></span>
-    <span>{{(user && user.comment)}}</span>
+    <span>{{(user?.DisplayName || user?.LoginName)}} <div class="responseOf" *ngIf="responseOf"><ion-icon name="return-down-forward-outline"></ion-icon> {{responseOf}}</div></span>
+    <span class="text">{{(user?.Text)}}</span>
     <div class="action-comment-wrapper">
-      <div class="ion-activatable action-comment">
-        <ion-icon name="chevron-up-outline"></ion-icon> <div>{{(user && user.likes).length | bignum}}</div>
+      <div class="ion-activatable action-response">
+        <div>Responder</div>
         <ion-ripple-effect></ion-ripple-effect>
       </div>
       <div class="ion-activatable action-comment">
-        <ion-icon name="chevron-down-outline"></ion-icon> <div>{{(user && user.dislikes).length | bignum}}</div>
+        <ion-icon name="chevron-up-outline"></ion-icon> <div>{{((user?.likes) || []).length | bignum}}</div>
+        <ion-ripple-effect></ion-ripple-effect>
+      </div>
+      <div class="ion-activatable action-comment">
+        <ion-icon name="chevron-down-outline"></ion-icon> <div>{{((user?.dislikes) || []).length | bignum}}</div>
         <ion-ripple-effect></ion-ripple-effect>
       </div>
     </div>
-    <div class="action-moreless" *ngIf="(user && user.responses).length > 0 && !individualRender && !showComments" (click)="activeCommentPlus()">
-      <ion-icon name="caret-down-outline"></ion-icon> Ver mais {{getCommentOcurrences((user && user.responses))}} respostas
+    <div class="action-moreless" *ngIf="((user?.responses) || []).length > 0 && !individualRender && !showComments" (click)="activeCommentPlus()">
+      <ion-icon name="caret-down-outline"></ion-icon> Ver mais {{getCommentOccurrences((user?.responses))}} respostas
     </div>
-    <ng-container *ngIf="(user && user.responses).length > 0 && !individualRender && showComments">
-      <div class="response" *ngFor="let response of (user && user.responses)">
-        <comment [responseOf]="(user && user.name)" [individualRender]="true" [user]="response"></comment>
+    <ng-container *ngIf="((user?.responses) || []).length > 0 && !individualRender && showComments">
+      <div class="response" *ngFor="let response of (user?.responses)">
+        <comment [responseOf]="(user?.name)" [individualRender]="true" [user]="response"></comment>
       </div>
-      <div class="action-moreless" *ngIf="(user && user.responses).length > 0 && !individualRender" (click)="activeCommentPlus()">
+      <div class="action-moreless" *ngIf="((user?.responses) || []).length > 0 && !individualRender" (click)="activeCommentPlus()">
         <ion-icon name="caret-up-outline"></ion-icon> Ver menos respostas
       </div>
     </ng-container>
   </div>
 </div>
-<ng-container *ngIf="(user && user.responses).length > 0 && individualRender">
-  <comment [responseOf]="(user && user.name)" *ngFor="let response of (user && user.responses)" [individualRender]="true" [user]="response"></comment>
+<ng-container *ngIf="((user?.responses) || []).length > 0 && individualRender">
+  <comment [responseOf]="(user?.name)" *ngFor="let response of (user?.responses)" [individualRender]="true" [user]="response"></comment>
 </ng-container>

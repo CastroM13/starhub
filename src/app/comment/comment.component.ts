@@ -9,11 +9,12 @@ export class CommentComponent implements OnInit {
   @Input() user: any;
   @Input() individualRender;
   @Input() responseOf;
-  showComments: boolean = false;
+  temaEscuro: boolean = JSON.parse(localStorage.getItem('temaEscuro'));
+  showComments = false;
   constructor() { }
 
-  getCommentOcurrences(item) {
-    return (JSON.stringify(item).match(/comment/g) || []).length;
+  getCommentOccurrences(item) {
+    return (JSON.stringify(item).match(/Text/g) || []).length;
   }
 
   activeCommentPlus() {

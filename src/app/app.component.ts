@@ -9,6 +9,6 @@ export class AppComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    document.body.classList.toggle('dark', JSON.parse(localStorage.getItem("temaEscuro")));
+    document.body.classList.toggle('dark', JSON.parse(localStorage.getItem('temaEscuro')));
   }
 }

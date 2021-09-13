@@ -1,0 +1,62 @@
+<ion-content>
+  <div class="invisible" id="loading">
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" width="64px" height="64px" viewBox="0 0 64 64" enable-background="new 0 0 64 64" xml:space="preserve">  <image id="image0" width="64" height="64" x="0" y="0" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAAAAYLlVAAAABGdBTUEAALGPC/xhBQAAACBjSFJN AAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAJcEhZ cwAAIZ4AACGeAXKO2PwAAAAHdElNRQflCAsQBguwgjEvAAADYUlEQVRo3u2Zz0tUURTHP29myt8R 2lCKi2hjQZCQlJsWglhRGoL0H7QMdNHCTVALI1QkofwLBCNnUWQ/dCViYjWQGJYYmAsJi1wkGeP8 uC2cpjfv3fvmvTu+IWLOW8w753vePd9355x7z3vPEOiL0cFFmmhgmbc8F0+0BhGaB2HGLaZxwhrj aIdfl5jXvVPQJRBRAJGCEKDTAez0NlZAK3HOa2IS0SPQpIlJxNApQ+MHVUpwSxzwMlZIGSRMM02U EWVefLaAyw73uezxbqRJZtDNdkZNMUxFFj7ikFUjeVcBBhM24wo1Jo92hxHb8yfQLfUcy/IZU4w3 5i28hABh0+RnH60mr2rWJB5rVCvClBNyuw40U6ZIlxZT5mzSyKgFH6VRbEoT+iZfWDW6XCUht5Sz 9dLm28YQM3xlhiHalJNcTwKBYJWAHbWXoer+JYiYZNJFoR0kCEAV+4hZQftfEFUOpEYcRbznEZCg X8RksHXCjpJSzOVVrxluGvUk9e7LcFjqOUdQn4CHMhRQwYrNuM1xP8Ir+gFqLAvNnF/hhXo3NFpp SW9Gc0REUi8Bc4vWdryXoteQFAn8TwRMe4FRy2kaWOaN2Cggg3TlVzKSWYJT3KPcr7qXLkRU8tFi X6SskARkTeaQj0FruUZdhgC10v0vqWqv8g7fRxxBnME/BC4rPFt9CR8mlj6NU7fbEzYo8rPBSzK7 lgvsz1Tgpd11QPUs4/UZx528YCd9lmCCfyIHBNyX+A0WrAoElLNo8YlS6h+BLDLpnzKGSKaVBHcp KUz4rI7IqOEMJ1jitfz5xh8pdkRFAkUCITVkVHKKUt6J774yUKxPpQykXysIIhz2fSW0GIO8yjJs cCSPEJX0McMk12VvSOSX9NpMj/MI/7ffjLgl8EliPKRJ4E6WesWKS6rAqOKYJFkaNZPsnIOGvAx3 kD2M/9Ik8NNBkxMQMZZsxiQLmgSems5TPLOHk/1vXTbTgHYSBjKfd5L0ukxCAQ+y1Fl5f0SAHmb5 xiw9shLL+HXQz23OSjHlRV0sECfFCjfk78cIMmVSp/TeojmDJVQ5oD0WQ8+eE8hx6bzFMK8zSh4t me3LkcevRcoydC0fcui+E3iYQ3cneeRAkGmTOu1DFeS8OEQvUbaI0qv6JJPr+A1ZhyeHN1fe0gAA ACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMS0wOC0xMVQxNjowNjoxMSswMzowMHNHr00AAAAldEVYdGRh dGU6bW9kaWZ5ADIwMjEtMDgtMTFUMTY6MDY6MTErMDM6MDACGhfxAAAAGXRFWHRTb2Z0d2FyZQB3 d3cuaW5rc2NhcGUub3Jnm+48GgAAAABJRU5ErkJggg=="/>
+    </svg>
+  </div>
+  <div id="body" class="content">
+    <ion-card style="position: relative;">
+      <ion-item>
+        <ion-label>Plataformas</ion-label>
+        <ion-select (ionChange)="seeSaw()" [(ngModel)]="selectedFilterOptions" multiple="true" cancelText="Cancelar" okText="Ok!">
+          <ion-select-option *ngFor="let item of filterOptions" (value)="item">{{item}}</ion-select-option>
+        </ion-select>
+        <ion-icon name="create-outline"></ion-icon>
+      </ion-item>
+      <ng-container *ngFor="let item of filterOptions">
+        <ion-chip [id]="item" *ngIf="contains(item).length > 0">
+          <ion-label>{{item}}</ion-label>
+          <ion-icon (click)="removeFilter(item)" name="close"></ion-icon>
+        </ion-chip>
+      </ng-container>
+    </ion-card>
+    <ion-card *ngFor="let item of news; index as i" [id]="'card-'+i" >
+      <div class="news-card" [id]="'news-card-'+i">
+      </div>
+      <div (click)="openFrame(item.url, i)" [id]="'inner-card-'+i">
+        <img [src]="item.img" />
+        <ion-card-header>
+          <ion-card-subtitle>{{item.origin}} / {{item.tag}}<ion-label style="float: right">{{item.date}}</ion-label></ion-card-subtitle>
+          <ion-card-title>{{item.title}}</ion-card-title>
+        </ion-card-header>
+      </div>
+      <div class="actions" [id]="'actions-'+i">
+        <ion-item [disabled]="item.offlineMode || !token" *ngIf="!getLiked(item)" (click)="like(item)">
+          <ion-icon name="heart-outline"></ion-icon>
+          <ion-label>{{(item.likes || []).length}}</ion-label>
+        </ion-item>
+        <ion-item [disabled]="item.offlineMode || !token" *ngIf="getLiked(item)" (click)="like(item)">
+          <ion-icon name="heart" style="color: #ff2c69"></ion-icon>
+          <ion-label>{{(item.likes || []).length}}</ion-label>
+        </ion-item>
+        <ion-item [disabled]="item.offlineMode" [id]="'toggleComments-on-'+i" (click)="showComments(i)">
+          <ion-icon name="chatbubble-outline"></ion-icon>
+          <ion-label>{{getCommentOccurrences(item)}}</ion-label>
+        </ion-item>
+        <ion-item [disabled]="item.offlineMode" class='toggleComments-off' [id]="'toggleComments-off-'+i" (click)="clearComments(i)">
+          <ion-icon name="chatbubble"></ion-icon>
+          <ion-label>{{getCommentOccurrences(item)}}</ion-label>
+        </ion-item>
+        <ion-item (click)="share(item)">
+          <ion-icon name="share-social-outline"></ion-icon>
+        </ion-item>
+        <ion-item [id]="'action-remove-'+i" class="action-remove" (click)="closeFrame(i)">
+          <ion-icon name="chevron-up-outline"></ion-icon>
+        </ion-item>
+      </div>
+      <div [id]="'comment-'+i" class="comments" style="height: 0px">
+        <comment-sender [senderID]="token" [id]="i" [user]="user" (addComment)="addComment($event, i)"></comment-sender>
+        <comment *ngFor="let comment of item.comments.reverse()" [user]="comment"></comment>
+      </div>
+    </ion-card>
+  </div>
+</ion-content>

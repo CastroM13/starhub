@@ -4,13 +4,13 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class ChannelsService {
   private readonly api: string = 'http://vgstudio.servegame.com:3000/';
 
   constructor(private http: HttpClient) { }
 
-  getUserInfo(id) {
-    return this.http.get(this.api+'user/'+id);
+  getChannels() {
+    return this.http.get(this.api+'channels');
   }
 
 }

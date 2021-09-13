@@ -1,0 +1,26 @@
+.channel-body {
+  min-height: 13em;
+}
+
+.custom-popover .popover-content {
+  right: .75em !important;
+  bottom: 8em !important;
+}
+
+.channel-item {
+  display: flex;
+  height: 4em;
+  word-wrap: break-word;
+  overflow: hidden;
+
+  ion-avatar {
+    padding: .5em;
+    width: 25%;
+  }
+
+  ion-label {
+    font-size: .8em;
+    padding: .5em;
+    width: 75%;
+  }
+}

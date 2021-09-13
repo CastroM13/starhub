@@ -1,9 +1,42 @@
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content #messageContent [fullscreen]="true">
+  <div *ngIf="userInfo">
+    <div *ngFor="let message of messages" class="message received">
+      <div class="message-image">
+        <img
+          class="profileImage"
+          [src]="message.profileImage || 'https://avatars.dicebear.com/api/initials/'+message.name+'.svg'"
+          alt="avatar"
+        />
+      </div>
+      <div class="message-text">
+        <span>
+          {{message.name}}
+          <time>{{message.time}}</time>
+        </span>
+        <span>
+          {{message.text}}
+        </span>
+      </div>
+    </div>
+  </div>
+  <form (ngSubmit)="addMessage($event.target)">
+    <div
+      class="sender">
+      <input
+        autocomplete="off"
+        name="message"
+        type="text"
+        placeholder="Conversar em #canal-geral"
+        maxlength="100"
+        (focus)="focused()"
+        (blur)="blurred()"
+      />
+      <button style="display: none" type="submit">Enviar</button>
+      <ion-icon (click)="channelShift($event)" name="radio-outline"></ion-icon>
+    </div>
+  </form>
+</ion-content>
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+<ion-content *ngIf="!userInfo">
+  Você precisa estar logado para acessar os canais :(
 </ion-content>
